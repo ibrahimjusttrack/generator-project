@@ -10,6 +10,7 @@ func New() *echo.Echo {
 
 	e.GET("/", handlers.Hello)
 	e.GET("/templates/all", handlers.GetAllTemplates)
-
+	e.GET("/fields/:id", handlers.GetFields)
+	e.POST("/template", handlers.CreateTemplate)
 	return e
 }
