@@ -2,7 +2,10 @@ module myapp
 
 go 1.20
 
-require github.com/labstack/echo/v4 v4.10.2
+require (
+	github.com/labstack/echo/v4 v4.10.2
+	go.mongodb.org/mongo-driver v1.11.3
+)
 
 require (
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -18,7 +21,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
-	go.mongodb.org/mongo-driver v1.11.3 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )
 
