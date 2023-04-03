@@ -1,8 +1,12 @@
 import { getAllTemplates } from "../../utils/api-calls"
 import { APIList, Template } from "../../utils/api-types"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import styles from "./home.module.css"
+import styled from "styled-components"
+const Container = styled.div`
+  padding: 12px;
+`
+
 const Home = () => {
   const [templates, setTemplates] = useState<APIList<Template>>()
   const fetchData = async () => {
@@ -13,23 +17,23 @@ const Home = () => {
     fetchData()
   }, [])
   return (
-    <div className={styles.container}>
+    <Container>
       <h1>Templates</h1>
-      <div className={styles.templatesContainer}>
+      <div className="p-10">
         {templates?.results.map((template) => (
-          <div className={styles.template} key={template.id}>
+          <div key={template.id} className="rounded">
             <Link to={`/template/${template.id}`}>
-              <strong className={styles.templateName}>{template.name}</strong>
-              <div className={styles.templateLanguage}>
+              <strong>{template.name}</strong>
+              <div>
                 <strong>Language: </strong>
                 <span>{template.language}</span>
               </div>
-              <p className={styles.description}>{template.description}</p>
+              <p>{template.description}</p>
             </Link>
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   )
 }
 
