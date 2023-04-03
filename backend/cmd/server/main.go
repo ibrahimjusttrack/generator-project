@@ -10,7 +10,7 @@ import (
 
 func main() {
 	e := routes.New()
-	db.InitDb()
+	db.InitDB()
 
 	s := http.Server{
 		Addr:    ":8080",

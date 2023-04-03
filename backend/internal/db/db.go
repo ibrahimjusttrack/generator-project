@@ -11,7 +11,7 @@ import (
 
 var db *mongo.Client
 
-func InitDb() {
+func InitDB() {
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
@@ -31,7 +31,7 @@ func InitDb() {
 
 }
 
-func DbManager() *mongo.Client {
+func DBManager() *mongo.Client {
 	return db
 }
 
