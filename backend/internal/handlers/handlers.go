@@ -36,6 +36,8 @@ func GetAllTemplates(c echo.Context) error {
 		templateResponse.Templates = append(templateResponse.Templates, template)
 	}
 
+	templateResponse.Total = len(templateResponse.Templates)
+
 	return c.JSON(http.StatusOK, templateResponse)
 }
 

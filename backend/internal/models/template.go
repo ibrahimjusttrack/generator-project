@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -16,7 +17,7 @@ type Metadata struct {
 	ID         primitive.ObjectID `json:"id" bson:"_id"`
 	TemplateID primitive.ObjectID `json:"templateId" bson:"templateId"`
 	Type       string             `json:"type" bson:"type"`
-	Key        string             `json:"key" bson:"key"`
+	Key        string             `json:"accessor" bson:"key"`
 	Default    string             `json:"default" bson:"default"`
 	Options    json.RawMessage    `json:"options" bson:"options"`
 }

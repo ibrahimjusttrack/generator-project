@@ -27,6 +27,7 @@ func InitDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	db = client
 	log.Println("Connected to MongoDB")
 
 }
@@ -36,6 +37,6 @@ func DBManager() *mongo.Client {
 }
 
 func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
-	collection := client.Database("local").Collection(collectionName)
+	collection := client.Database("generator").Collection(collectionName)
 	return collection
 }
