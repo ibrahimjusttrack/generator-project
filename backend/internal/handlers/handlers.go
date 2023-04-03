@@ -90,3 +90,33 @@ func GetFields(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, fieldsResponse)
 }
+
+func CreateField(c echo.Context) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var field models.Metadata
+
+	if err := c.Bind(&field); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	templateId := c.Param("id")
+	objId, _ := primitive.ObjectIDFromHex(templateId)
+
+	newField := models.Metadata{
+		ID:         primitive.NewObjectID(),
+		TemplateID: objId,
+		Type:       field.Type,
+		Key:        field.Key,
+		Default:    field.Default,
+		Options:    field.Options,
+	}
+	fieldCollection := db.GetCollection(db.DBManager(), "field")
+
+	result, err := fieldCollection.InsertOne(ctx, newField)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusCreated, result)
+}
