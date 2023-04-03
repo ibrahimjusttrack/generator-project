@@ -1,22 +1,23 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"myapp/api/routes"
 )
 
 func main() {
-	e := echo.New()
+	e := routes.New()
 
 	s := http.Server{
-    Addr:        ":8080",
-    Handler:     e,
-  }
+		Addr:    ":8080",
+		Handler: e,
+	}
 
-  if err := s.ListenAndServe(); err != http.ErrServerClosed {
-    log.Fatal(err)
-  }
+	if err := s.ListenAndServe(); err != http.ErrServerClosed {
+		log.Fatal(err)
+	}
 }
 
 // /tepmlates/list  {[]}
