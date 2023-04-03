@@ -12,8 +12,10 @@ export type Template = {
 
 export type Field = {
   id: string
-  name: string
   type: FieldTypes
+  accessor: string
+  default?: string | number | string[] | null
+  options?: string[]
 }
 
 export enum FieldTypes {
