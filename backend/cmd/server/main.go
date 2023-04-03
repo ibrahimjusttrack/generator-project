@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
+	"myapp/internal/db"
 	"net/http"
 
-	"myapp/db"
 	"myapp/internal/routes"
 )
 

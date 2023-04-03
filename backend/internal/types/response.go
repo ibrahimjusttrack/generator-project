@@ -1,6 +1,8 @@
 package types
 
-import "myapp/models"
+import (
+	"myapp/internal/models"
+)
 
 type TemplateAllResponse struct {
 	Templates []models.Template `json:"results"`
