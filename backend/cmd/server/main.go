@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"myapp/api/routes"
 	"myapp/db"
+	"myapp/internal/routes"
 )
 
 func main() {

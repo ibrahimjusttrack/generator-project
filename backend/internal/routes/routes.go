@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/labstack/echo"
-	"myapp/api/handlers"
+	"github.com/labstack/echo/v4"
+	"myapp/internal/handlers"
 )
 
 func New() *echo.Echo {
