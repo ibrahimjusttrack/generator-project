@@ -1,8 +1,8 @@
 package generator
 
 type Input struct {
-	Key   string
-	Value string
+	Key   string `json:"accessor"`
+	Value string `json:"value"`
 }
 
 type Service interface {
