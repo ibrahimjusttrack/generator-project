@@ -9,6 +9,7 @@ func New() *echo.Echo {
 	e := echo.New()
 
 	e.GET("/", handlers.Hello)
+	e.GET("/templates/all", handlers.GetAllTemplates)
 
 	return e
 }
