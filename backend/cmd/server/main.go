@@ -5,10 +5,12 @@ import (
 	"net/http"
 
 	"myapp/api/routes"
+	"myapp/db"
 )
 
 func main() {
 	e := routes.New()
+	db.InitDb()
 
 	s := http.Server{
 		Addr:    ":8080",
@@ -19,14 +21,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
-// /tepmlates/list  {[]}
-
-//
-//// {
-//	"name": "name",
-//	"language": "language" // main language
-//	"description": ""
-//	"create_at": ""
-//	"update_at": ""
-////}
