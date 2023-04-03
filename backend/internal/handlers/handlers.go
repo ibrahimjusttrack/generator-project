@@ -2,13 +2,18 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"myapp/internal/db"
+	"myapp/internal/generator"
 	"myapp/internal/models"
 	"myapp/internal/types"
 )
@@ -119,4 +124,22 @@ func CreateField(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, result)
+}
+
+func CreateJSONConfig(c echo.Context) error {
+	var configs []generator.Input
+	templateId := c.Param("id")
+
+	if err := c.Bind(&configs); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	path := filepath.Join("config", fmt.Sprintf("%s.json", templateId))
+
+	j, _ := json.Marshal(configs)
+	j, _ = json.MarshalIndent(configs, "", "  ")
+
+	os.WriteFile(path, j, 0644)
+
+	return c.JSON(http.StatusCreated, string(j))
 }
