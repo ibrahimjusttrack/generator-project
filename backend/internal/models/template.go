@@ -11,6 +11,7 @@ type Template struct {
 	Name        string             `json:"name" bson:"name"`
 	Description string             `json:"description" bson:"description"`
 	Language    string             `json:"language" bson:"language"`
+	Path        string             `json:"path"`
 }
 
 type Metadata struct {
@@ -20,4 +21,5 @@ type Metadata struct {
 	Key        string             `json:"accessor" bson:"key"`
 	Default    string             `json:"default" bson:"default"`
 	Options    json.RawMessage    `json:"options" bson:"options"`
+	Order      int                `json:"-" bson:"order"`
 }
