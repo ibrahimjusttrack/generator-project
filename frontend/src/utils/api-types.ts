@@ -16,6 +16,7 @@ export type Field = {
   accessor: string
   default?: string | number | string[] | null
   options?: string[]
+  description: string
 }
 
 export enum FieldTypes {

@@ -1,4 +1,5 @@
-import { Box, Select, styled, TextField } from "@mui/material"
+import { Box, Select, styled, TextField, Tooltip } from "@mui/material"
+import { Help } from "@mui/icons-material"
 import { Field as FieldProps, FieldTypes } from "../../../utils/api-types"
 
 const Label = styled("label")({
@@ -6,6 +7,11 @@ const Label = styled("label")({
   fontWeight: "600",
   marginRight: 12,
 })
+const HelpIcon = styled(Help)(({ theme }) => ({
+  height: "0.75em",
+  verticalAlign: "middle",
+  lineHeight: 1,
+}))
 
 const Field = (
   props: FieldProps & { value: any; setValue: (value: any) => void }
@@ -49,6 +55,9 @@ const Field = (
       ) : (
         <input type={"text"} id={props.id} />
       )}
+      <Tooltip title={props.description}>
+        <HelpIcon />
+      </Tooltip>
     </Box>
   )
 }
