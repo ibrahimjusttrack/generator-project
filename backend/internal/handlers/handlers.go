@@ -2,11 +2,7 @@ package handlers
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"net/http"
-	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -134,12 +130,12 @@ func CreateJSONConfig(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	path := filepath.Join("config", fmt.Sprintf("%s.json", templateId))
+	g := generator.Generator{}
 
-	j, _ := json.Marshal(configs)
-	j, _ = json.MarshalIndent(configs, "", "  ")
+	_, err := g.Generate(c.Request().Context(), templateId, configs)
+	if err != nil {
+		return c.String(500, err.Error())
+	}
 
-	os.WriteFile(path, j, 0644)
-
-	return c.JSON(http.StatusCreated, string(j))
+	return c.JSON(http.StatusCreated, string(""))
 }
