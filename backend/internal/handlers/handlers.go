@@ -105,12 +105,13 @@ func CreateField(c echo.Context) error {
 	objId, _ := primitive.ObjectIDFromHex(templateId)
 
 	newField := models.Metadata{
-		ID:         primitive.NewObjectID(),
-		TemplateID: objId,
-		Type:       field.Type,
-		Key:        field.Key,
-		Default:    field.Default,
-		Options:    field.Options,
+		ID:          primitive.NewObjectID(),
+		TemplateID:  objId,
+		Type:        field.Type,
+		Key:         field.Key,
+		Default:     field.Default,
+		Options:     field.Options,
+		Description: field.Description,
 	}
 	fieldCollection := db.GetCollection(db.DBManager(), "field")
 
