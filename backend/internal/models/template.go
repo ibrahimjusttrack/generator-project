@@ -15,13 +15,12 @@ type Template struct {
 }
 
 type Metadata struct {
-	ID         primitive.ObjectID `json:"id" bson:"_id"`
-	TemplateID primitive.ObjectID `json:"templateId" bson:"templateId"`
-	Type       string             `json:"type" bson:"type"`
-	Key        string             `json:"accessor" bson:"key"`
-	Default    string             `json:"default" bson:"default"`
-	Options    json.RawMessage    `json:"options" bson:"options"`
-	Order      int                `json:"-" bson:"order"`
-	Description string             `json:"description" bson:"description"`
+	ID          primitive.ObjectID `json:"id" bson:"_id"`
+	TemplateID  primitive.ObjectID `json:"templateId" bson:"templateId"`
+	Type        string             `json:"type" bson:"type"`
+	Key         string             `json:"accessor" bson:"key"`
+	Default     string             `json:"default" bson:"default"`
+	Options     json.RawMessage    `json:"options" bson:"options"`
 	Order       int                `json:"-" bson:"order"`
+	Description string             `json:"description" bson:"description"`
 }

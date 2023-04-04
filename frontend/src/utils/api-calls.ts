@@ -4,39 +4,9 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 })
 
-export const templates: Template[] = [
-  {
-    name: "Go Microservices",
-    description: "spetial microservices",
-    language: "go",
-    id: "1",
-  },
-  {
-    name: "Go Microservices",
-    description: "spetial microservices",
-    language: "go",
-    id: "2",
-  },
-  {
-    name: "Go Microservices",
-    description: "spetial microservices",
-    language: "go",
-    id: "3",
-  },
-  {
-    name: "Go Microservices",
-    description: "spetial microservices",
-    language: "go",
-    id: "4",
-  },
-]
-
 export const getAllTemplates = async (): Promise<
   AxiosResponse<APIList<Template>>
 > => api.get("/templates/all")
-
-export const getTemplateById = (id: string): Template | undefined =>
-  templates.find((template) => template.id === id)
 
 export const getFieldsForTemplate = async (
   id: string

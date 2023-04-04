@@ -7,15 +7,15 @@ import { generateConfig, getFieldsForTemplate } from "../../utils/api-calls"
 import { Field as TypeField } from "../../utils/api-types"
 import Field from "./Field/Field"
 
-export const FormContainer = styled(Box)({
+export const FormContainer = styled(Box)(({ theme }) => ({
   width: "100%",
   maxWidth: "720px",
   margin: "20px auto",
   border: `solid 1px ${alpha(grey[800], 0.3)}`,
   borderRadius: 1,
-  p: 2,
+  padding: theme.spacing(2),
   textAlign: "center",
-})
+}))
 
 export const SubmitButton = ({
   loading,

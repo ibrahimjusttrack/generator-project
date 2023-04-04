@@ -62,9 +62,10 @@ func (s Generator) Generate(ctx context.Context, templateID string, input []Inpu
 		return "", err
 	}
 
-	cmd := exec.Command("cookiecutter", "-f", "--no-input", "tmp/", template.template.Path)
-	err = cmd.Run()
+	outPut, err := exec.Command("cookiecutter", "-f", "--no-input", "tmp/", template.template.Path).Output()
+
 	if err != nil {
+		fmt.Printf("Output: %s, err - %s\n", string(outPut), err)
 		return "", err
 	}
 
@@ -79,7 +80,12 @@ type templateFull struct {
 func (s Generator) getTemplate(ctx context.Context, templateID string) (templateFull, error) {
 	var template models.Template
 	templateCollection := db.GetCollection(db.DBManager(), "template")
-	err := templateCollection.FindOne(ctx, bson.M{"_id": templateID}).Decode(&template)
+	id := primitive.NewObjectID()
+	err := id.UnmarshalText([]byte(templateID))
+	if err != nil {
+		return templateFull{}, err
+	}
+	err = templateCollection.FindOne(ctx, bson.M{"_id": id}).Decode(&template)
 
 	if err != nil {
 		return templateFull{}, err

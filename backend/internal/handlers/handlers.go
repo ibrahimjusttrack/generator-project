@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"archive/zip"
 	"context"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"myapp/internal/db"
@@ -98,6 +100,7 @@ func UploadTemplate(c echo.Context) error {
 	if _, err = io.Copy(dst, src); err != nil {
 		return err
 	}
+	rootPath := unzip(path, "templates")
 	templateCollection := db.GetCollection(db.DBManager(), "template")
 
 	id := primitive.NewObjectID()
@@ -108,10 +111,14 @@ func UploadTemplate(c echo.Context) error {
 	result, err := templateCollection.UpdateByID(ctx, id, bson.D{{
 		"$set", bson.D{
 			{
-				"path", path,
+				"path", rootPath,
 			},
 		},
 	}})
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	err = os.Remove(path)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
@@ -190,4 +197,53 @@ func CreateJSONConfig(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, string(""))
+}
+
+func unzip(filePath string, dst string) string {
+	archive, err := zip.OpenReader(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer archive.Close()
+	var firstPath *string = nil
+	for _, f := range archive.File {
+
+		filePath := filepath.Join(dst, f.Name)
+		if firstPath == nil {
+			firstPath = &filePath
+		}
+		fmt.Println("unzipping file ", filePath)
+
+		if !strings.HasPrefix(filePath, filepath.Clean(dst)+string(os.PathSeparator)) {
+			fmt.Println("invalid file path")
+			return ""
+		}
+		if f.FileInfo().IsDir() {
+			fmt.Println("creating directory...")
+			os.MkdirAll(filePath, os.ModePerm)
+			continue
+		}
+
+		if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
+			panic(err)
+		}
+
+		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			panic(err)
+		}
+
+		fileInArchive, err := f.Open()
+		if err != nil {
+			panic(err)
+		}
+
+		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
+			panic(err)
+		}
+
+		dstFile.Close()
+		fileInArchive.Close()
+	}
+	return *firstPath
 }
