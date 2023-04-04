@@ -109,12 +109,13 @@ func CreateField(c echo.Context) error {
 	objId, _ := primitive.ObjectIDFromHex(templateId)
 
 	newField := models.Metadata{
-		ID:         primitive.NewObjectID(),
-		TemplateID: objId,
-		Type:       field.Type,
-		Key:        field.Key,
-		Default:    field.Default,
-		Options:    field.Options,
+		ID:          primitive.NewObjectID(),
+		TemplateID:  objId,
+		Type:        field.Type,
+		Key:         field.Key,
+		Default:     field.Default,
+		Options:     field.Options,
+		Description: field.Description,
 	}
 	fieldCollection := db.GetCollection(db.DBManager(), "field")
 
@@ -139,7 +140,8 @@ func CreateJSONConfig(c echo.Context) error {
 	j, _ := json.Marshal(configs)
 	j, _ = json.MarshalIndent(configs, "", "  ")
 
-	os.WriteFile(path, j, 0644)
+	err := os.WriteFile(path, j, 0644)
+	fmt.Println(err)
 
 	return c.JSON(http.StatusCreated, string(j))
 }
