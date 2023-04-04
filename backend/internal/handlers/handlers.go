@@ -2,16 +2,21 @@ package handlers
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 
-	"github.com/labstack/echo/v4"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"myapp/internal/db"
 	"myapp/internal/generator"
 	"myapp/internal/models"
 	"myapp/internal/types"
+
+	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func Hello(c echo.Context) error {
@@ -43,8 +48,7 @@ func GetAllTemplates(c echo.Context) error {
 }
 
 func CreateTemplate(c echo.Context) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	ctx := c.Request().Context()
 
 	var template models.Template
 
@@ -61,6 +65,53 @@ func CreateTemplate(c echo.Context) error {
 	templateCollection := db.GetCollection(db.DBManager(), "template")
 
 	result, err := templateCollection.InsertOne(ctx, newTemplate)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusCreated, result)
+}
+
+func UploadTemplate(c echo.Context) error {
+	ctx := c.Request().Context()
+	templateId := c.Param("id")
+
+	file, err := c.FormFile("project")
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	src, err := file.Open()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	defer src.Close()
+
+	path := filepath.Join("templates", file.Filename)
+	dst, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	// Copy
+	if _, err = io.Copy(dst, src); err != nil {
+		return err
+	}
+	templateCollection := db.GetCollection(db.DBManager(), "template")
+
+	id := primitive.NewObjectID()
+	err = id.UnmarshalText([]byte(templateId))
+	if err != nil {
+		fmt.Println(err)
+	}
+	result, err := templateCollection.UpdateByID(ctx, id, bson.D{{
+		"$set", bson.D{
+			{
+				"path", path,
+			},
+		},
+	}})
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}

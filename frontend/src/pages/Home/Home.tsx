@@ -14,6 +14,17 @@ const StyledLink = styled(Link)({
   textDecoration: "none",
 })
 
+const Card = styled(Box)(({ theme }) => ({
+  border: `solid 1px ${alpha(grey[800], 0.3)}`,
+  borderRadius: 1,
+  padding: theme.spacing(2),
+  textAlign: "center",
+  transition: "all 0.2s ease",
+  "&:hover": {
+    boxShadow: `0 0 4px ${alpha(theme.palette.common.black, 0.4)}`,
+  },
+}))
+
 const Home = () => {
   const [templates, setTemplates] = useState<APIList<Template>>()
   const fetchData = async () => {
@@ -36,28 +47,17 @@ const Home = () => {
           rowGap: 3,
           py: 4,
         }}
-        className="p-10"
       >
         {templates?.results.map((template) => (
           <StyledLink key={template.id} to={`/template/${template.id}`}>
-            <Box
-              sx={{
-                border: `solid 1px ${alpha(grey[800], 0.3)}`,
-                borderRadius: 1,
-                p: 2,
-                textAlign: "center",
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  boxShadow: (theme) =>
-                    `0 0 4px ${alpha(theme.palette.common.black, 0.4)}`,
-                },
-              }}
-              className="rounded"
-            >
+            <Card>
               <strong>{template.name}</strong>
-            </Box>
+            </Card>
           </StyledLink>
         ))}
+        <StyledLink to="/template/add">
+          <Card>Add New Template</Card>
+        </StyledLink>
       </Box>
     </Container>
   )

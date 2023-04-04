@@ -1,11 +1,33 @@
-import { alpha, Box, Button, CircularProgress } from "@mui/material"
+import { alpha, Box, Button, CircularProgress, styled } from "@mui/material"
 import { grey } from "@mui/material/colors"
-import { useCallback, useEffect, useState } from "react"
+import { PropsWithChildren, useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { generateConfig, getFieldsForTemplate } from "../../utils/api-calls"
 import { Field as TypeField } from "../../utils/api-types"
 import Field from "./Field/Field"
+
+export const FormContainer = styled(Box)({
+  width: "100%",
+  maxWidth: "720px",
+  margin: "20px auto",
+  border: `solid 1px ${alpha(grey[800], 0.3)}`,
+  borderRadius: 1,
+  p: 2,
+  textAlign: "center",
+})
+
+export const SubmitButton = ({
+  loading,
+  onSubmit,
+  children,
+}: PropsWithChildren<{ onSubmit: () => void; loading: boolean }>) => {
+  return (
+    <Button variant="contained" onClick={onSubmit}>
+      {loading ? <CircularProgress color="inherit" size={20} /> : children}
+    </Button>
+  )
+}
 
 const TemplatePage = () => {
   const params = useParams<{ id: string }>()
@@ -36,17 +58,7 @@ const TemplatePage = () => {
   }, [fetchTemplates, params])
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        maxWidth: "720px",
-        margin: "20px auto",
-        border: `solid 1px ${alpha(grey[800], 0.3)}`,
-        borderRadius: 1,
-        p: 2,
-        textAlign: "center",
-      }}
-    >
+    <FormContainer>
       {fields.map((field) => (
         <Field
           key={field.id}
@@ -57,10 +69,10 @@ const TemplatePage = () => {
           }
         />
       ))}
-      <Button variant="contained" onClick={() => onSubmit()}>
-        {loading ? <CircularProgress color="inherit" size={20} /> : "Generate"}
-      </Button>
-    </Box>
+      <SubmitButton loading={loading} onSubmit={onSubmit}>
+        Generate
+      </SubmitButton>
+    </FormContainer>
   )
 }
 

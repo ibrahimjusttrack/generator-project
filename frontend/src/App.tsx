@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home"
 import Template from "./pages/Template/Template"
 import logo from "./assets/imgs/logo.svg"
 import { grey } from "@mui/material/colors"
+import AddTemplate from "./pages/AddTemplate/AddTemplate"
 const Navbar = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -27,6 +28,7 @@ function App() {
       </Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/template/add" element={<AddTemplate />} />
         <Route path="/template/:id" element={<Template />} />
       </Routes>
     </BrowserRouter>

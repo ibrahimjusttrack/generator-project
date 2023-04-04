@@ -17,6 +17,7 @@ func New() *echo.Echo {
 	e.GET("/templates/all", handlers.GetAllTemplates)
 	e.GET("/fields/:id", handlers.GetFields)
 	e.POST("/template", handlers.CreateTemplate)
+	e.POST("/upload-template/:id", handlers.UploadTemplate)
 	e.POST("/field/:id", handlers.CreateField)
 	e.POST("/config/:id", handlers.CreateJSONConfig)
 	return e
