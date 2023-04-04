@@ -18,6 +18,6 @@ func New() *echo.Echo {
 	e.GET("/fields/:id", handlers.GetFields)
 	e.POST("/template", handlers.CreateTemplate)
 	e.POST("/field/:id", handlers.CreateField)
-
+	e.POST("/config/:id", handlers.CreateJSONConfig)
 	return e
 }

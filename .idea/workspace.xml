@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="357b301c-b4f3-47f6-8525-c1991482076c" name="Changes" comment="add interface">
-      <change afterPath="$PROJECT_DIR$/backend/templates/simple-project/cookiecutter.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/templates/simple-project/simple-project/hello.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="357b301c-b4f3-47f6-8525-c1991482076c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/backend/internal/generator/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/internal/generator/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +16,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
-        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -54,11 +50,6 @@
     ]
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/backend/templates/simple-project/simple-project" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="go build myapp/cmd/server" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="generator-project" />
@@ -78,11 +69,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="add git ignore" />
-    <MESSAGE value="add interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="add interface" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
